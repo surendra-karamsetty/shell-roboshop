@@ -90,7 +90,7 @@ else
 fi
 
 systemctl restart catalogue &>>$LOG_FILE
-VALIDATE $? "Restarting catalogue"
+VALIDATION $? "Restarting catalogue"
 
 
 
