@@ -49,6 +49,8 @@ VALIDATION $? "Download the code"
 cd /app &>>$LOG_FILE
 VALIDATION $? "GO to app directory"
 
+rm -rf /app/*
+
 unzip /tmp/user.zip &>>$LOG_FILE
 VALIDATION $? "unzip the code"
 
