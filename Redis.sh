@@ -7,7 +7,7 @@ LOG_FILE="$LOG_FOLDER/$0.log"
 mkdir -p $LOG_FOLDER
 
 
-if [ $id -ne 0 ]; then
+if [ $ID -ne 0 ]; then
     echo "Please execute the script with the sudo user"
     exit 1
 else
