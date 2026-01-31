@@ -1,10 +1,11 @@
 #!/bin/bsh
 
 ID=$(id -u)
+mkdir -p shell-script
 LOG_FOLDER="/var/log/shell-script"
 LOG_FILE="$LOG_FOLDER/$0.log"
 
-mkdir -p shell-script
+
 
 if [ $ID -ne 0 ]; then
     echo "Please run the script with sudo user" &>>$LOG_FILE
