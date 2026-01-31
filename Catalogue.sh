@@ -21,9 +21,8 @@ VALIDATION(){
         exit 1
     else
         echo "$2 ..SUCCESS" 
+    fi
 }
-
-
 
 dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATION $? "disable nodejs"
