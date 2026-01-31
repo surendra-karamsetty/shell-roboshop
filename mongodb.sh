@@ -15,10 +15,10 @@ fi
 
 VALIDATION(){
     if [ $1 -ne 0 ]; then
-        echo "$2 .. FAILED" &>>$LOG_FILE
+        echo "$2 .. FAILED" 
         exit 1
     else
-        echo "$2 ..SUCCESS" &>>$LOG_FILE
+        echo "$2 ..SUCCESS" 
     fi
 }
 
