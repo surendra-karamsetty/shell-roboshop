@@ -81,16 +81,16 @@ VALIDATION $? "coppied mongo.repo"
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATION $? "mongodb-mongosh installed"
 
-INDEX=$(mongosh --host $MONGODB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+INDEX=$(mongosh --host $MONGODB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")') &>>$LOG_FILE
 
 if [ $INDEX -le 0 ]; then
-    mongosh --host $MONGODB_HOST </app/db/master-data.js
+    mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
     VALIDATION $? "Loading products"
 else
     echo "Products already exits so ..SKIPPING"
 fi
 
-systemctl restart catalogue
+systemctl restart catalogue &>>$LOG_FILE
 VALIDATE $? "Restarting catalogue"
 
 
