@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SG_ID=""
-AMI_ID=""
+SG_ID="sg-0b9f1fbcf18f4096e"
+AMI_ID="ami-0220d79f3f480ecf5"
 HOSTED_ZONE_ID="Z01190221Q8O9S5K8BHJE"
 DOMINE_NAME="venkata.online"
 
@@ -32,7 +32,7 @@ INSTANCE_ID=$(
             --query 'Reservations[].Instances[].PrivateIpAddress' \
             --output text 
         )
-        RECORD_NAME="$instance.$DOMINE_NAME" #mango.venkata.online
+        RECORD_NAME="$instance.$DOMINE_NAME" #mongodb.venkata.online
     fi
     echo "Ip address $IP"
 
