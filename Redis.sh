@@ -1,6 +1,10 @@
 #!/bin/bash
 
 ID=$(id -u)
+LOG_FOLDER="/var/log/shell-script"
+LOG_FILE="$LOG_FOLDER/$0.log"
+
+mkdir -p $LOG_FOLDER
 
 
 if [ $id -ne 0 ]; then
@@ -19,24 +23,24 @@ VALIDATION(){
     fi
 }
 
-dnf module disable redis -y
+dnf module disable redis -y &>>$LOG_FILE
 VALIDATION $? "disable redis"
 
-dnf module enable redis:7 -y
+dnf module enable redis:7 -y &>>$LOG_FILE
 VALIDATION $? "enable redis:7"
 
-dnf install redis -y 
+dnf install redis -y &>>$LOG_FILE
 VALIDATION $? "install redis:7"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf &>>$LOG_FILE
 VALIDATION $? "Update listen address"
 
-sed -i '/protected-mode/ s/yes/no/g' /etc/redis/redis.conf
+sed -i '/protected-mode/ s/yes/no/g' /etc/redis/redis.conf &>>$LOG_FILE
 VALIDATION $? "Update protected-mode"
 
-systemctl enable redis 
+systemctl enable redis &>>$LOG_FILE
 VALIDATION $? "enable redis"
 
-systemctl start redis 
+systemctl start redis &>>$LOG_FILE
 VALIDATION $? "start redis"
 
