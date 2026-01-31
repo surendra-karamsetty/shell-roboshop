@@ -7,9 +7,7 @@ DOMINE_NAME="venkata.online"
 
 for instance in $@
 do
-
-INSTANCE_ID=$( 
-	aws ec2 run-instances \
+    INSTANCE_ID=$( aws ec2 run-instances \
     --image-id $AMI_ID \
     --instance-type t3.micro \
     --security-group-ids $SG_ID \
@@ -24,7 +22,7 @@ INSTANCE_ID=$(
             --query 'Reservations[].Instances[].PublicIpAddress' \
             --output text 
         )
-        RECORD_NAME="$instance" #venkata.online
+        RECORD_NAME="$DOMINE_NAME" #venkata.online
     else
         ip=$(
             aws ec2 describe-instances \
