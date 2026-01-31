@@ -23,13 +23,13 @@ VALIDATION(){
     fi
 }
 
-dnf module disable nodejs -y $>>$LOG_FILE
+dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATION $? "disable nodejs"
 
-dnf module enable nodejs:20 -y $>>$LOG_FILE
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATION $? "enable nodejs:20"
 
-dnf install nodejs -y $>>$LOG_FILE
+dnf install nodejs -y &>>$LOG_FILE
 VALIDATION $? "install nodejs"
 
 id roboshop
@@ -40,33 +40,33 @@ else
     echo "roboshop user is alreday exist so ..SKIPPING"
 fi
 
-mkdir -p /app $>>$LOG_FILE
+mkdir -p /app &>>$LOG_FILE
 VALIDATION $? "app directory created"
 
-curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip $>>$LOG_FILE
+curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>>$LOG_FILE
 VALIDATION $? "Download the code"
 
-cd /app $>>$LOG_FILE
+cd /app &>>$LOG_FILE
 VALIDATION $? "GO to app directory"
 
-unzip /tmp/user.zip $>>$LOG_FILE
+unzip /tmp/user.zip &>>$LOG_FILE
 VALIDATION $? "unzip the code"
 
-cd /app $>>$LOG_FILE
+cd /app &>>$LOG_FILE
 VALIDATION $? "GO to app directory"
 
-npm install $>>$LOG_FILE
+npm install &>>$LOG_FILE
 VALIDATION $? "npm instalation"
 
-cp $SCRIPT_PATH/user.service /etc/systemd/system/user.service $>>$LOG_FILE
+cp $SCRIPT_PATH/user.service /etc/systemd/system/user.service &>>$LOG_FILE
 
-systemctl daemon-reload $>>$LOG_FILE
+systemctl daemon-reload &>>$LOG_FILE
 VALIDATION $? "daemon-reload"
 
-systemctl enable user $>>$LOG_FILE
+systemctl enable user &>>$LOG_FILE
 VALIDATION $? "enable user"
 
-systemctl start user $>>$LOG_FILE
+systemctl start user &>>$LOG_FILE
 VALIDATION $? "start user"
 
 
