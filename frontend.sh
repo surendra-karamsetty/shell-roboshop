@@ -1,7 +1,7 @@
 #!/bin/bsh
 
 ID=$(id -u)
-SCRIPT_PATH=$pwd
+SCRIPT_PATH="/home/ec2-user/shell-roboshop"
 
 if [ $ID -ne 0 ]; then
     echo "Please execute the script with sudo user"
