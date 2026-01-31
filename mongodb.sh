@@ -1,10 +1,9 @@
 #!/bin/bsh
 
 ID=$(id -u)
-mkdir -p shell-script
 LOG_FOLDER="/var/log/shell-script"
 LOG_FILE="$LOG_FOLDER/$0.log"
-
+mkdir -p $LOG_FOLDER
 
 
 if [ $ID -ne 0 ]; then
