@@ -2,6 +2,8 @@
 
 SG_ID=""
 AMI_ID=""
+HOSTED_ZONE_ID="Z01190221Q8O9S5K8BHJE"
+DOMINE_NAME="venkata.online"
 
 for instance in $@
 do
@@ -14,7 +16,7 @@ INSTANCE_ID=$(
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
 	--query 'Instances[0].InstanceId' \
     --output text )
-    
+
     if [ $instance == 'frontend' ]; then
         ip=$(
             aws ec2 describe-instances \
@@ -22,6 +24,7 @@ INSTANCE_ID=$(
             --query 'Reservations[].Instances[].PublicIpAddress' \
             --output text 
         )
+        RECORD_NAME="$instance" #venkata.online
     else
         ip=$(
             aws ec2 describe-instances \
@@ -29,5 +32,31 @@ INSTANCE_ID=$(
             --query 'Reservations[].Instances[].PrivateIpAddress' \
             --output text 
         )
+        RECORD_NAME="$instance.$DOMINE_NAME" #mango.venkata.online
     fi
+    echo "Ip address $IP"
+
+    aws route53 change-resource-record-sets \
+    --hosted-zone-id $HOSTED_ZONE_ID \
+    --change-batch '
+{
+    "Comment": "Update a record set",
+    "Changes": [
+        {
+        "Action": "UPSERT",
+        "ResourceRecordSet": {
+            "Name": "'$RECORD_NAME'",
+            "Type": "A",
+            "TTL": 1,
+            "ResourceRecords": [
+            { "Value": "'$IP'" }
+            ]
+        }
+        }
+    ]
+    }
+'
+    echo "Record updated for $instance"
+
+
 done
