@@ -24,7 +24,7 @@ do
         )
         RECORD_NAME="$DOMINE_NAME" #venkata.online
     else
-        ip=$(
+        IP=$(
             aws ec2 describe-instances \
             --instance-ids $INSTANCE_ID \
             --query 'Reservations[].Instances[].PrivateIpAddress' \
