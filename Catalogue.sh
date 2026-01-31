@@ -3,7 +3,7 @@
 ID=$(id -u)
 LOG_FOLDER="/var/log/shell-script"
 LOG_FILE="$LOG_FOLDER/$0.log"
-SCRIPT_PATH=$pwd
+SCRIPT_PATH="/home/ec2-user/shell-roboshop"
 MONGODB_HOST=mongodb.venkata.online
 
 mkdir -p $LOG_FOLDER
