@@ -35,10 +35,10 @@ systemctl start rabbitmq-server &>>$LOG_FILE
 VALIDATION $? "start rabbitmq-server"
 
 
-rabbitmqctl add_user roboshop roboshop123
+rabbitmqctl add_user roboshop roboshop123 &>>$LOG_FILE
 VALIDATION $? "add_user roboshop "
 
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>$LOG_FILE
 VALIDATION $? "Permissions set"
 
 
