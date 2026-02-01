@@ -1,0 +1,44 @@
+#!/bin/bash
+
+ID=$(id -u)
+LOG_FOLDER="/var/log/shell-script"
+LOG_FILE="$LOG_FOLDER/$0.log"
+SCRIPT_PATH="/var/log/shell-script"
+
+mkdir -p $LOG_FOLDER
+
+if [ $ID -ne 0 ]; then
+    echo "Please executed the scrip with sudo user"
+    exit 1
+else
+    echo "Script is executed with sudo user henc installing the package"
+fi
+
+VALIDATION(){
+    if [ $1 -ne 0 ]; then
+        echo "$2 ..FAILED"
+    else
+        echo "$2 ..SUCCESS"
+    fi
+}
+
+cp /$SCRIPT_PATH/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$LOG_FILE
+VALIDATION $? "rabbitmq.repo moved to repo path"
+
+dnf install rabbitmq-server -y &>>$LOG_FILE
+VALIDATION $? "Installing rabbitmq-server"
+
+systemctl enable rabbitmq-server &>>$LOG_FILE
+VALIDATION $? "enable rabbitmq-server"
+
+systemctl start rabbitmq-server &>>$LOG_FILE
+VALIDATION $? "start rabbitmq-server"
+
+
+rabbitmqctl add_user roboshop roboshop123
+VALIDATION $? "add_user roboshop "
+
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+VALIDATION $? "Permissions set"
+
+
