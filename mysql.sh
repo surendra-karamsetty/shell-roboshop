@@ -29,4 +29,6 @@ VALIDATION $? "enable mysqld"
 systemctl start mysqld &>>LOG_FILE
 VALIDATION $? "start mysqld"
 
+mysql_secure_installation --set-root-pass RoboShop@1 &>>LOG_FILE
+VALIDATION $? "Password set"
 
