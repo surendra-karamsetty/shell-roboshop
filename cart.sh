@@ -61,16 +61,16 @@ VALIDATION $? "Moved to app folder"
 npm install &>>LOG_FILE
 VALIDATION $? "dependencies downloaded"
 
-cp /$SCRIPT_PATH/cart.service /etc/systemd/system/cart.service
+cp /$SCRIPT_PATH/cart.service /etc/systemd/system/cart.service &>>LOG_FILE
 VALIDATION $? "cart services copied"
 
-systemctl daemon-reload
+systemctl daemon-reload &>>LOG_FILE
 VALIDATION $? "daemon-reload"
 
-systemctl enable cart 
+systemctl enable cart &>>LOG_FILE
 VALIDATION $? "cart enable"
 
-systemctl start cart
+systemctl start cart &>>LOG_FILE
 VALIDATION $? "cart start"
 
 
