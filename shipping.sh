@@ -69,15 +69,16 @@ VALIDATION $? "daemon-reload"
 dnf install mysql -y &>>LOG_FILE
 VALIDATION $? "mysql installed"
 
-mysql -h $MYSQL_SERVER -uroot -pRoboShop@1 < /app/db/schema.sql &>>LOG_FILE
-VALIDATION $? "Load Schema in database"
+mysql -h $MYSQL_SERVER -uroot -pRoboShop@1 -e 'use cities'
+if [ $? -ne 0 ]; then
 
-mysql -h $MYSQL_SERVER  -uroot -pRoboShop@1 < /app/db/app-user.sql &>>LOG_FILE
-VALIDATION $? "Create app user, MySQL expects a password authentication"
-
-mysql -h $MYSQL_SERVER -uroot -pRoboShop@1 < /app/db/master-data.sql &>>LOG_FILE
-VALIDATION $? "Load Master Data, This includes the data of all the countries and their cities with distance to those cities"
-
+    mysql -h $MYSQL_SERVER -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOGS_FILE
+    mysql -h $MYSQL_SERVER -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$LOGS_FILE
+    mysql -h $MYSQL_SERVER -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOGS_FILE
+    VALIDATE $? "Loaded data into MySQL"
+else
+    echo -e "data is already loaded ... $Y SKIPPING $N"
+fi
 
 systemctl enable shipping &>>LOG_FILE
 VALIDATION $? "shipping enabled"
