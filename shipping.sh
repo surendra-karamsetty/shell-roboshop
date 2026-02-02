@@ -3,7 +3,7 @@
 ID=$(id -u)
 LOG_FOLDER="/var/log/shell-script"
 LOG_FILE="$LOG_FOLDER/$0.log"
-SCRIPT_PATH="/var/log/shell-script"
+SCRIPT_PATH="/home/ec2-user/shell-roboshop"
 MYSQL_SERVER="mysql.venkata.online"
 
 mkdir -p $LOG_FOLDER
