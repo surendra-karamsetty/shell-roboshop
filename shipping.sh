@@ -65,11 +65,6 @@ VALIDATION $? "Services script moved"
 systemctl daemon-reload &>>LOG_FILE
 VALIDATION $? "daemon-reload"
 
-systemctl enable shipping &>>LOG_FILE
-VALIDATION $? "shipping enabled"
-
-systemctl start shipping &>>LOG_FILE
-VALIDATION $? "shipping started"
 
 dnf install mysql -y &>>LOG_FILE
 VALIDATION $? "mysql installed"
@@ -80,8 +75,15 @@ VALIDATION $? "Load Schema in database"
 mysql -h $MYSQL_SERVER  -uroot -pRoboShop@1 < /app/db/app-user.sql &>>LOG_FILE
 VALIDATION $? "Create app user, MySQL expects a password authentication"
 
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/master-data.sql &>>LOG_FILE
+mysql -h $MYSQL_SERVER -uroot -pRoboShop@1 < /app/db/master-data.sql &>>LOG_FILE
 VALIDATION $? "Load Master Data, This includes the data of all the countries and their cities with distance to those cities"
+
+
+systemctl enable shipping &>>LOG_FILE
+VALIDATION $? "shipping enabled"
+
+systemctl start shipping &>>LOG_FILE
+VALIDATION $? "shipping started"
 
 systemctl restart shipping &>>LOG_FILE
 VALIDATION $? "restart shipping"
