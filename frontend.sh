@@ -5,6 +5,8 @@ LOG_FOLDER="/var/log/shell-script"
 LOG_FILE="$LOG_FOLDER/$0.log"
 SCRIPT_PATH="/home/ec2-user/shell-roboshop"
 
+mkdir -p $LOG_FOLDER
+
 if [ $ID -ne 0 ]; then
     echo "Please execute the script with sudo user"
     exit 1
