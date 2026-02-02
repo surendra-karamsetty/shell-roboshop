@@ -1,6 +1,8 @@
 #!/bin/bsh
 
 ID=$(id -u)
+LOG_FOLDER="/var/log/shell-script"
+LOG_FILE="$LOG_FOLDER/$0.log"
 SCRIPT_PATH="/home/ec2-user/shell-roboshop"
 
 if [ $ID -ne 0 ]; then
